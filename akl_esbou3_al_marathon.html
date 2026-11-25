@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#263d31">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="أكل اليوم">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="أكل اليوم">
+<meta name="description" content="مخطط غذائي سنوي لحساب السعرات والماكروز حسب الوزن والتمرين، مع وجبات لبنانية محسوبة واقتراحات طبخ حسب الموجود في المطبخ.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+<title>أكل اليوم · مخطط غذائي سنوي</title>
+<style>
+:root{--bg:#f3f4ef;--card:#fff;--ink:#1d2c24;--muted:#647168;--line:#dce3da;--green:#355a43;--green2:#e6efe7;--gold:#a66d21;--gold2:#fbf0dc;--red:#9b4540;--red2:#f7e8e6;--blue:#365d76;--shadow:0 5px 22px rgba(25,45,32,.07);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Tahoma,Arial,sans-serif;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #d6a64c;outline-offset:2px} .app{max-width:980px;margin:auto;padding:0 14px 42px}
+header{padding:18px 3px 12px;display:flex;justify-content:space-between;gap:12px;align-items:center}h1{font-size:1.45rem;margin:0;font-weight:850;color:var(--green)}.subtitle{color:var(--muted);font-size:.9rem;margin-top:3px}.head-actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:10px 13px;background:var(--green);color:#fff;font-weight:750}.btn.secondary{background:var(--green2);color:var(--green)}.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}.btn.danger{background:var(--red2);color:var(--red)}.btn.small{font-size:.84rem;padding:7px 10px;border-radius:10px}.nav{display:flex;gap:7px;overflow:auto;padding:5px 0 12px;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;white-space:nowrap;padding:8px 14px;font-weight:700}.nav button.active{background:var(--green);color:white;border-color:var(--green)}
+.page{display:none}.page.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0;box-shadow:var(--shadow)}.card h2{font-size:1.08rem;margin:0 0 10px}.card h3{font-size:1rem;margin:0}.muted{color:var(--muted)}.smalltext{font-size:.82rem;color:var(--muted)}.datebar{display:grid;grid-template-columns:44px 1fr 44px auto;gap:8px;align-items:center}.datebar input{min-width:0;width:100%;padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);direction:ltr;text-align:center}.datebtn{height:42px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--ink);font-size:1.2rem}.grid{display:grid;gap:10px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field label{display:block;font-size:.82rem;color:var(--muted);font-weight:700;margin:0 0 5px}.field input,.field select{width:100%;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:10px;color:var(--ink)}.field input[type=number]{direction:ltr;text-align:center}.inline-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.activity-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.activity-select{width:100%;padding:11px;background:var(--bg);border:1px solid var(--line);border-radius:11px;color:var(--ink)}.activity-detail{margin-top:9px;padding:9px 11px;border-radius:12px;background:var(--green2);color:var(--green);font-size:.88rem}.target-hero{background:linear-gradient(135deg,#263d31,#41654b);color:#fff;border-radius:18px;padding:17px;margin:10px 0;box-shadow:var(--shadow)}.target-hero .kcal{font-size:2rem;font-weight:850;line-height:1.15}.target-hero .tiny{opacity:.83;font-size:.8rem}.macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.macro{background:rgba(255,255,255,.13);padding:10px;border-radius:12px}.macro b{display:block;font-size:1.18rem}.macro span{font-size:.79rem;opacity:.85}.target-note{font-size:.78rem;opacity:.82;margin-top:10px}.split{display:flex;align-items:center;justify-content:space-between;gap:10px}.tag{font-size:.74rem;padding:3px 8px;border-radius:999px;background:var(--green2);color:var(--green);font-weight:750;white-space:nowrap}.tag.estimate{background:var(--gold2);color:#825616}.tag.lab{background:#e3edf4;color:#315d79}.tag.other{background:#eee9f5;color:#604b79}.progress{height:7px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;background:#67936f;border-radius:99px}.progress.over i{background:var(--red)}.targets-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.target-chip{border:1px solid var(--line);border-radius:12px;padding:9px 8px;min-width:0}.target-chip b{display:block;font-size:.96rem}.target-chip span{font-size:.74rem;color:var(--muted)}
+.meal{border:1px solid var(--line);border-radius:16px;margin:10px 0;background:var(--card);overflow:hidden}.meal-head{padding:12px 13px;background:#f8faf6;display:flex;align-items:center;justify-content:space-between;gap:9px}.meal-head .when{font-size:.76rem;color:var(--muted)}.meal-body{padding:0 12px 12px}.meal-budget{font-size:.77rem;color:var(--muted);padding:8px 0 2px}.food-row{border-top:1px dashed var(--line);padding:10px 0}.food-name{display:flex;align-items:center;gap:7px}.food-name .emoji{font-size:1.35rem}.food-name b{flex:1;font-size:.92rem}.food-meta{font-size:.76rem;color:var(--muted);margin-top:3px}.food-controls{display:flex;align-items:center;gap:6px;direction:ltr;margin-top:8px}.food-controls input{width:82px;text-align:center;direction:ltr;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:7px;color:var(--ink)}.food-controls button{width:33px;height:33px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-size:1.1rem}.remove{border:0;background:transparent;color:var(--red);font-size:.78rem;margin-right:auto}.add-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.prepfor{width:58px!important}.meal-total{font-size:.81rem;color:var(--green);font-weight:750;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}.empty{padding:8px 0;color:var(--muted);font-size:.86rem}.hint{padding:10px 12px;border-radius:12px;background:var(--gold2);color:#75501d;font-size:.83rem;margin:9px 0}.hint.red{background:var(--red2);color:var(--red)}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary-line{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}.summary-line:last-child{border-bottom:0}.summary-line b{white-space:nowrap}.list-item{padding:12px 0;border-top:1px dashed var(--line);display:flex;gap:10px;align-items:flex-start}.list-item:first-child{border-top:0}.list-item .details{flex:1;min-width:0}.list-item b{display:block}.list-item small{display:block;color:var(--muted);margin-top:3px}.source-link{color:#315d79;text-decoration:underline;overflow-wrap:anywhere}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:16px 2px 7px}.section-title h2{font-size:1.04rem;margin:0}.filters{display:flex;gap:6px;overflow:auto;padding:8px 0;scrollbar-width:none}.filters button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);padding:6px 11px;font-size:.82rem}.filters button.on{background:var(--green);color:#fff;border-color:var(--green)}.search{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}.picker{position:fixed;inset:0;background:rgba(12,24,17,.56);z-index:20;display:flex;align-items:flex-end;justify-content:center}.picker[hidden]{display:none}.picker-panel{background:var(--card);color:var(--ink);width:100%;max-width:720px;height:min(88%,820px);border-radius:22px 22px 0 0;padding:13px 14px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.picker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.picker-list{overflow:auto;flex:1;-webkit-overflow-scrolling:touch}.pick-card{border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);padding:12px 2px;width:100%;text-align:right;display:flex;gap:10px;align-items:center}.pick-card .emoji{font-size:1.6rem}.pick-card .copy{flex:1}.pick-card b{display:block}.pick-card small{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}.pick-card .macrotext{color:var(--green);font-weight:750}.pantry-group{margin:12px 0}.pantry-group h3{font-size:.92rem;margin:0 0 7px;color:var(--green)}.pantry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pantry-item{display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:8px 9px;font-size:.83rem;min-width:0}.pantry-item input{width:17px;height:17px;flex:0 0 auto;accent-color:var(--green)}.recipe-group{margin-top:15px}.recipe-group h3{font-size:.98rem;margin:0 0 7px}.recipe-card{border:1px solid var(--line);border-radius:13px;padding:11px;margin:8px 0;background:#fff}.recipe-card-top{display:flex;align-items:flex-start;gap:9px}.recipe-card .emoji{font-size:1.55rem}.recipe-card-main{flex:1;min-width:0}.recipe-card b{display:block}.recipe-card small{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}.recipe-card .macroline{color:var(--green);font-weight:750}.recipe-card .missing{color:#8a5a13}.recipe-card .available{color:#39744a}.recipe-card .btn{margin-top:9px}.recipe-empty{padding:9px 0;color:var(--muted);font-size:.85rem}
+.source-box{padding:12px 0;border-top:1px dashed var(--line)}.source-box:first-child{border-top:0}.source-box b{display:block;margin-bottom:3px}.source-box p{font-size:.85rem;color:var(--muted);margin:3px 0 6px}.footer-note{font-size:.78rem;color:var(--muted);margin:12px 2px}.bar-actions{display:flex;gap:8px;flex-wrap:wrap}.hide{display:none!important}.danger-text{color:var(--red)}.toast{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));background:#243b2e;color:#fff;padding:11px 14px;border-radius:12px;z-index:40;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}
+@media(min-width:720px){.app{padding:0 22px 50px}.home-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px;align-items:start}.sticky-side{position:sticky;top:10px}.meal-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.meal-grid .meal{min-width:0}.picker{align-items:center}.picker-panel{height:82%;border-radius:20px}}
+@media(max-width:460px){.app{padding:0 11px 35px}header{align-items:flex-start}.head-actions .btn{padding:8px 9px;font-size:.8rem}.grid.three{grid-template-columns:1fr 1fr}.targets-row{grid-template-columns:1fr 1fr}.target-hero .kcal{font-size:1.8rem}.datebar{grid-template-columns:38px 1fr 38px}.datebar .today{grid-column:1/-1}.grid.two{grid-template-columns:1fr 1fr}.macro b{font-size:1.05rem}}
+@media print{body{background:white}.nav,.head-actions,.datebar,.activity-card,.add-row,.remove,.food-controls button,.picker,.toast{display:none!important}.app{max-width:none;padding:0}.card,.meal,.target-hero{box-shadow:none;break-inside:avoid}.page{display:none!important}#todayPage{display:block!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><h1>🍽 أكل اليوم</h1><div class="subtitle">مخطط سنوي للوجبات · السعرات والماكروز حسب تمرينك ووزنك</div></div>
+  <div class="head-actions">
+    <button class="btn secondary small" id="exportBtn">حفظ نسخة</button>
+    <button class="btn ghost small" id="importBtn">استرجاع</button>
+    <input id="importFile" type="file" accept="application/json,.json" hidden>
+  </div>
+</header>
+<nav class="nav" aria-label="الأقسام">
+  <button data-page="todayPage" class="active">اليوم</button>
+  <button data-page="prepPage">تحضير الطعام</button>
+  <button data-page="pantryPage">شو نطبخ اليوم؟</button>
+  <button data-page="libraryPage">قاعدة الوجبات</button>
+  <button data-page="sourcesPage">المصادر وطريقة الحساب</button>
+</nav>
+
+<section id="todayPage" class="page active">
+  <div class="card">
+    <div class="datebar">
+      <button class="datebtn" id="prevDay" aria-label="اليوم السابق">‹</button>
+      <input id="dateInput" type="date" aria-label="تاريخ اليوم">
+      <button class="datebtn" id="nextDay" aria-label="اليوم التالي">›</button>
+      <button class="btn secondary small today" id="goToday">اليوم</button>
+    </div>
+    <div class="smalltext" id="dateLabel" style="margin-top:7px"></div>
+  </div>
+  <div class="home-layout">
+    <div class="sticky-side">
+      <div class="card activity-card">
+        <div class="activity-top"><h2>🏃‍♂️ تمرين اليوم</h2><span class="tag">يتحدّث تلقائياً</span></div>
+        <select id="activity" class="activity-select">
+          <option value="rest">راحة / بدون تمرين</option>
+          <option value="run8">ركض 8 كم</option>
+          <option value="run10">ركض 10 كم</option>
+          <option value="run15">ركض 15 كم</option>
+          <option value="run20">ركض 20 كم</option>
+          <option value="half">نصف ماراثون · 21.1 كم</option>
+          <option value="marathon">ماراثون · 42.2 كم</option>
+          <option value="customRun">ركض · مسافة أدخلها بنفسي</option>
+          <option value="push">جيم · Push</option>
+          <option value="pull">جيم · Pull</option>
+          <option value="legs">جيم · Legs</option>
+          <option value="fullGym">جيم · جسم كامل</option>
+          <option value="cross">تمرين متنوع / دراجة</option>
+          <option value="walk">مشي سريع</option>
+        </select>
+        <div class="inline-fields">
+          <div class="field"><label for="weight">وزنك اليوم (كغ)</label><input id="weight" type="number" min="40" max="200" step="0.1" inputmode="decimal"></div>
+          <div class="field" id="lifeField"><label for="life">نشاطك خارج التمرين</label><select id="life"><option value="1.2">قليل / عمل مكتبي</option><option value="1.3">خفيف الحركة</option><option value="1.45">نشط خلال النهار</option></select></div>
+        </div>
+        <div class="field" style="margin-top:10px"><label for="goal">هدف التغذية</label><select id="goal"><option value="maintain">المحافظة على الوزن · توازن الطاقة</option><option value="loss">خفض تدريجي للوزن · −300 kcal</option><option value="performance">دعم الأداء والتعافي · +150 kcal</option></select></div>
+        <div class="inline-fields" id="exerciseDetails" hidden>
+          <div class="field" id="distanceField"><label for="distance">المسافة (كم)</label><input id="distance" type="number" min="0" max="100" step="0.1" inputmode="decimal"></div>
+          <div class="field" id="minutesField"><label for="minutes">المدة (دقيقة)</label><input id="minutes" type="number" min="10" max="600" step="5" inputmode="numeric"></div>
+        </div>
+        <div class="activity-detail" id="activityText"></div>
+      </div>
+      <div class="target-hero">
+        <div class="tiny" id="targetMode">هدف السعرات التقريبي لليوم</div>
+        <div class="kcal"><span id="targetKcal">—</span> <span style="font-size:.9rem">kcal</span></div>
+        <div class="macros">
+          <div class="macro"><b id="targetCarbs">—</b><span>كربوهيدرات / غ</span></div>
+          <div class="macro"><b id="targetProtein">—</b><span>بروتين / غ</span></div>
+          <div class="macro"><b id="targetFat">—</b><span>دهون / غ</span></div>
+        </div>
+        <div class="target-note" id="targetExplain"></div>
+      </div>
+      <div class="card">
+        <div class="split"><h2>📊 تقدّم اليوم</h2><span class="tag" id="statusTag">فارغ</span></div>
+        <div class="targets-row" style="margin-top:8px">
+          <div class="target-chip"><b id="actualKcal">0</b><span>السعرات / kcal</span><div class="progress"><i id="barKcal" style="width:0%"></i></div></div>
+          <div class="target-chip"><b id="actualCarbs">0</b><span>الكربوهيدرات / غ</span><div class="progress"><i id="barCarbs" style="width:0%"></i></div></div>
+          <div class="target-chip"><b id="actualProtein">0</b><span>البروتين / غ</span><div class="progress"><i id="barProtein" style="width:0%"></i></div></div>
+          <div class="target-chip"><b id="actualFat">0</b><span>الدهون / غ</span><div class="progress"><i id="barFat" style="width:0%"></i></div></div>
+        </div>
+        <div id="remainingText" class="smalltext" style="margin-top:9px"></div>
+        <div class="hint" id="calorieHint">اختاري وجباتك من القاعدة لتظهر المجاميع.</div>
+      </div>
+      <div class="card">
+        <div class="split"><h2>⚙️ إجراءات اليوم</h2></div>
+        <div class="bar-actions" style="margin-top:9px">
+          <button class="btn small" id="suggestBtn">اقترحي وجبات اليوم</button>
+          <button class="btn secondary small" id="copyPrevBtn">نسخ وجبات أمس</button>
+          <button class="btn ghost small" id="clearBtn">تفريغ اليوم</button>
+          <button class="btn ghost small" id="printBtn">طباعة</button>
+        </div>
+        <div class="footer-note">الاقتراح نقطة بداية قابلة للتعديل، وليس وصفة إلزامية أو خطة علاجية.</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-title"><h2>وجبات اليوم</h2><span class="smalltext">وجبتان رئيسيتان + سناكان</span></div>
+      <div id="mealSlots" class="meal-grid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="prepPage" class="page">
+  <div class="card"><div class="split"><h2>👩‍🍳 ملخّص التحضير</h2><span class="tag">حسب يومك المحدد</span></div>
+    <p class="smalltext">كل كمية أدناه هي وزن الأكل المطبوخ الجاهز للتقديم لحصة واحدة. حدّدي عدد الحصص في كل وجبة ليحسب النظام كمية التحضير التقريبية.</p>
+    <div id="prepSummary"></div>
+  </div>
+  <div class="card"><h2>📦 ملخّص اليوم للمطبخ</h2><div id="kitchenSummary"></div></div>
+  <div class="card"><h2>⚖️ سجل الوزن</h2><p class="smalltext">يعرض الأوزان التي أدخلتِها في الأيام السابقة. لا يغيّر التطبيق الوزن تلقائياً.</p><div id="weightHistory"></div></div>
+</section>
+
+<section id="pantryPage" class="page">
+  <div class="card">
+    <div class="split"><h2>🧺 شو موجود بالمطبخ اليوم؟</h2><span class="tag">اقتراحات من الموجود</span></div>
+    <p class="smalltext">علّمي فقط الأشياء الموجودة فعلياً في البيت. قاعدة الاقتراحات تفضّل الأكلات اللبنانية والمكونات المعتادة في البيت اللبناني، ثم الأكلات التي تحتاج غرضاً واحداً بسيطاً من الدكان القريب. لا تقترح مكونات غريبة أو وصفات تتطلب مشتريات خاصة.</p>
+    <div class="bar-actions" style="margin:10px 0"><button class="btn secondary small" id="pantryDefaults">الأساسيات المنزلية</button><button class="btn ghost small" id="pantryClear">إلغاء التحديد</button></div>
+    <label class="smalltext" style="display:flex;align-items:center;gap:8px;padding:9px 0"><input id="allowMarket" type="checkbox" style="width:18px;height:18px"> أظهري أيضاً وصفات ينقصها مكوّن واحد فقط من الدكان أو السوبرماركت القريب</label>
+    <div id="pantryGroups"></div>
+    <div class="footer-note">القائمة قابلة للتعديل في أي وقت. الاختيارات تحفظ على هذا الجهاز فقط.</div>
+  </div>
+  <div class="card">
+    <div class="split"><h2>🍲 ماذا نقترح أن نطبخ؟</h2><span class="tag" id="pantryActivityTag">حسب تمرين اليوم</span></div>
+    <p class="smalltext" id="pantryTargetText">الاقتراحات تراعي السعرات والماكروز المحددة في صفحة اليوم، مع أولوية للموجود في البيت.</p>
+    <div id="recipeSuggestions"><div class="empty">حدّدي الموجود في المطبخ لتظهر اقتراحات مناسبة.</div></div>
+  </div>
+</section>
+
+<section id="libraryPage" class="page">
+  <div class="card"><h2>🍲 قاعدة الوجبات والأطعمة</h2><p class="smalltext">اختاري أكلة كاملة أو صنفاً. القيم لكل 100 غ من الطعام الجاهز للأكل، ما لم يذكر غير ذلك. اضغطي على الوجبة لإضافتها إلى اليوم.</p>
+    <input class="search" id="librarySearch" type="search" placeholder="ابحثي: ملوخية، كبة، بيض، رز بحليب…">
+    <div class="filters" id="libraryFilters"></div>
+    <div id="libraryList"></div>
+  </div>
+</section>
+
+<section id="sourcesPage" class="page">
+  <div class="card"><h2>المراجع الغذائية</h2>
+    <div class="source-box"><b>1. الجامعة اللبنانية وWHO — Food Composition Data: Traditional Dishes, Arabic Sweets and Market Foods (2021)</b><p>المرجع الأساسي للأطباق اللبنانية: تحليل مخبري لعينات من 30 طبقاً تقليدياً جُمعت من خمس مناطق لبنانية. جداول 13 و14 تعرض الطاقة والكربوهيدرات والبروتين والدهون والألياف لكل 100 غ. جداول 20 و21 تعرض الحلويات العربية. القيم في التطبيق منقولة من الجداول المنشورة، وليست وصفة بيت محددة.</p><a class="source-link" href="https://ul.edu.lb/en/food-composition-data-traditional-dishes-arabic-sweets-and-market-foods" target="_blank" rel="noopener">صفحة الجامعة اللبنانية</a> · <a class="source-link" href="https://ul.edu.lb/sites/default/files/2021-06/20210422LURePaReport.pdf" target="_blank" rel="noopener">التقرير الكامل PDF</a></div>
+    <div class="source-box"><b>2. Me Nutrition — Lebanese dish database</b><p>مرجع تكميلي لتوسيع قائمة الأطباق غير الموجودة في التقرير الوطني. القيم تقديرية لكل 100 غ لوصفات نموذجية، وليست قياسات مخبرية. كما أُدرجت 35 حلوى عربية من التقرير حيث توافرت بيانات الطاقة والماكروز؛ واستُبعدت السجلات التي لم تُنشر لها هذه القيم.</p><a class="source-link" href="https://menutrition.app/dishes/country/lebanon/" target="_blank" rel="noopener">46 طبقاً لبنانياً مع السعرات والماكروز</a> · <a class="source-link" href="https://menutrition.app/dishes/kibbeh/" target="_blank" rel="noopener">الكبة</a> · <a class="source-link" href="https://menutrition.app/dishes/molokhia-lebanese/" target="_blank" rel="noopener">الملوخية اللبنانية</a></div>
+    <div class="source-box"><b>3. وصفات موثقة إضافية</b><p>الفاصوليا باللحمة: وصفة ومكونات مع قيم تقديرية من Spacemelon. البطاطا والبيض: وصفة لبنانية من Australian Eggs. الكوسا المحشي: وصفات منشورة من The Matbakh وCuisine Atlas. تختلف النتائج حسب كمية الزيت واللحم وحجم الحصة.</p><a class="source-link" href="https://www.spacemelon.com/recipes/world/libano/fasolia-bi-lahme/" target="_blank" rel="noopener">Fasolia bi lahme</a> · <a class="source-link" href="https://www.australianeggs.org.au/recipes-and-cooking/lebanese-potato-and-egg" target="_blank" rel="noopener">Batata w Bayd</a> · <a class="source-link" href="https://thematbakh.com/kousa-mahshi-zucchini/" target="_blank" rel="noopener">Kousa Mahshi</a> · <a class="source-link" href="https://cuisineatlas.com/middle-eastern-cuisine/lebanese/shish-barak/" target="_blank" rel="noopener">Shish Barak</a></div>
+    <div class="source-box"><b>4. تقدير الاحتياج الأساسي للطاقة — Mifflin–St Jeor (1990)</b><p>تُستخدم المعادلة لتقدير طاقة الراحة، ثم يضيف التطبيق تقديراً للنشاط اليومي والتمرين. هي معادلة تنبؤية وليست قياساً مباشراً أو ضماناً للاحتياج الفعلي.</p><a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener">الدراسة الأصلية على PubMed</a></div>
+    <div class="source-box"><b>5. البروتين والتمرين — International Society of Sports Nutrition</b><p>موقف الجمعية يذكر نطاقاً عاماً قدره 1.4–2.0 غ بروتين/كغ/يوم لمعظم المتدربين الأصحاء. اختيرت نقطة بدء 1.7 غ/كغ في هذا التطبيق، ويمكن تعديلها لاحقاً بناءً على التدريب والحالة الصحية.</p><a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5477153/" target="_blank" rel="noopener">Position Stand: Protein and Exercise</a></div>
+  </div>
+  <div class="card"><h2>كيف يحسب التطبيق الأهداف؟</h2>
+    <div class="source-box"><b>1. طاقة الراحة (REE)</b><p>للرجل: 10 × الوزن بالكيلوغرام + 6.25 × الطول بالسنتيمتر − 5 × العمر + 5. القيم الافتراضية: 42 سنة، 180 سم، و92 كغ.</p></div>
+    <div class="source-box"><b>2. الاحتياج اليومي</b><p>طاقة الراحة × معامل النشاط خارج التمرين (1.20 أو 1.30 أو 1.45) + سعرات التمرين التقديرية. الركض يُقدّر تقريبياً بنحو 0.95 سعرة × الوزن × المسافة بالكيلومتر. تمارين الجيم تُقدّر من المدة وشدة النشاط. لا ينبغي التعامل مع الناتج كقياس دقيق.</p></div>
+    <div class="source-box"><b>3. هدف الطاقة وتوزيع الماكروز</b><p>يمكن اختيار المحافظة على الوزن، أو خفض تدريجي بعجز 300 kcal، أو دعم الأداء بإضافة 150 kcal. البروتين = 1.7 غ/كغ. الدهون = الأكبر بين 0.8 غ/كغ و25% تقريباً من الطاقة. الكربوهيدرات تملأ الطاقة المتبقية. هذه تعديلات تخطيطية وليست وصفة فردية.</p></div>
+    <div class="hint">هذه أداة تخطيط منزلية وليست وصفة طبية. دقة احتياج الطاقة تعتمد على شدة التمرين، الحركة اليومية، النوم، الطقس، والاختلاف الفردي. راقبي متوسط الوزن والأداء والجوع خلال 2–3 أسابيع، ثم عدّلي معامل النشاط أو الأهداف. لا تعتمدي على تقديرات الأطباق إذا كانت الوصفة المنزلية تحتوي زيتاً أو سمنة أكثر من المتوسط.</div>
+  </div>
+  <div class="card"><h2>ملاحظات مهمة للدقة</h2><p class="smalltext">الوجبات اللبنانية في التقرير الوطني مقاسة مخبرياً، لكنها تمثل عينات محلية ومتوسطات ولا تطابق كل قدر منزلي. أطباق الفطور الجديدة والوصفات العالمية تقديرية. وزن الحصة بعد الطبخ هو أساس حساب الكميات في هذا التطبيق. كمية الملح/الصوديوم ليست معروضة في كل سجل، لذلك لا يستخدم التطبيق هذه الأرقام لحساب الصوديوم.</p><p class="smalltext">البيانات تُحفظ محلياً على المتصفح الذي تستعملينه. استخدمي «حفظ نسخة» بانتظام لنقلها أو استعادتها على جهاز آخر.</p></div>
+</section>
+</div>
+
+<div id="picker" class="picker" hidden>
+  <div class="picker-panel" role="dialog" aria-modal="true" aria-label="اختيار وجبة">
+    <div class="picker-head"><div><b id="pickerTitle">اختاري أكلة</b><div class="smalltext">تُضاف الحصة الافتراضية ويمكن تعديل غراماتها</div></div><button id="closePicker" class="btn ghost small">إغلاق ✕</button></div>
+    <input class="search" id="pickerSearch" type="search" placeholder="ابحثي عن أكلة أو وصفة…">
+    <div class="filters" id="pickerFilters"></div>
+    <div class="picker-list" id="pickerList"></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const STORE='akl-al-yawm-v1';
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const one=n=>(Math.round(n*10)/10).toLocaleString('en-US');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dayKey=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+const localToday=()=>dayKey(new Date());
+const dateAdd=(key,days)=>{let d=new Date(key+'T12:00:00');d.setDate(d.getDate()+days);return dayKey(d)};
+const dayLabel=key=>new Intl.DateTimeFormat('ar-LB',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date(key+'T12:00:00'));
+const CATS=[['all','الكل'],['breakfast','الفطور'],['lebanese','لبناني'],['world','عالمي'],['snack','سناك'],['sweet','حلويات'],['nuts','مكسرات'],['basic','مكوّنات']];
+const F={};
+function food(id,name,emoji,cat,k,c,p,f,fib,serving,source='estimate',url='',note=''){
+ F[id]={id,name,emoji,cat,k,c,p,f,fib,serving,source,url,note};
+}
+const LU='https://ul.edu.lb/sites/default/files/2021-06/20210422LURePaReport.pdf';
+const MN='https://menutrition.app/dishes/country/lebanon/';
+// Lebanese University / WHO 2021, Tables 13–14: analysed Lebanese dishes, values per 100 g edible portion.
+const lab=[
+ ['baba','متبّل باذنجان','🍆','lebanese',39,4.5,1.1,1.8,3.1,100],
+ ['batataMahshi','بطاطا محشية','🥔','lebanese',143,18,5,5.7,1.8,200],
+ ['burghulTomato','برغل بالبندورة','🍅','lebanese',146,20.8,3,5.6,4.2,250],
+ ['shishbarak','شيش برك','🥟','lebanese',154,18.7,4.8,6.7,0,300],
+ ['falafel','فلافل','🧆','lebanese',339,36.5,13.3,15.6,8.7,80],
+ ['spinachFatayer','فطاير سبانخ','🥟','lebanese',311,27.2,5.3,20.1,2.1,110],
+ ['fatteh','فتّة حمّص','🍲','lebanese',159,15.8,6.5,7.7,5.5,300],
+ ['fattoush','فتّوش','🥗','lebanese',52,7.2,1.5,1.9,6,180],
+ ['foul','فول مدمّس','🫘','lebanese',116,14.2,5.3,4.2,3.5,200],
+ ['hindbe','هندبة بالزيت','🥬','lebanese',235,5.9,2.5,22.4,5.3,120],
+ ['hummus','حمّص بالطحينة','🫘','lebanese',146,17.2,7.5,5.2,5.7,120],
+ ['kaftaPotato','كفتة وبطاطا','🍲','lebanese',94,7,8.8,3.4,1.4,350],
+ ['kibbehTray','كبّة بالصينية','🍲','lebanese',266,19.7,11.3,15.8,4.8,220],
+ ['kousa','كوسا محشي','🥒','lebanese',123,20.3,3.8,2.9,1,300],
+ ['lahmBajin','لحم بعجين','🫓','lebanese',244,37.1,11.2,5.6,1,150],
+ ['loubieh','لوبية بالزيت','🫘','lebanese',62,7.2,2.1,2.8,1.9,250],
+ ['malfouf','ملفوف محشي','🥬','lebanese',75,12.1,3.8,1.3,1.3,300],
+ ['mujadara','مجدّرة','🍲','lebanese',113,21.8,5.4,.5,5.4,300],
+ ['moghrabieh','مغربية','🍲','lebanese',124,15.6,6.7,3.9,0,300],
+ ['mousaka','مسقعة باذنجان','🍆','lebanese',165,14.8,3.2,10.3,3.5,300],
+ ['riceChicken','رز بالدجاج','🍗','lebanese',167,18.8,7.2,7,0,350],
+ ['riceMeat','رز باللحمة','🍚','lebanese',165,23,7.5,4.8,.8,350],
+ ['sayadieh','صيادية سمك','🐟','lebanese',171,22.1,6.5,6.3,0,350],
+ ['shawarmaChicken','شاورما دجاج','🍗','lebanese',197,1.1,29.7,8.2,0,150],
+ ['shawarmaMeat','شاورما لحمة','🥩','lebanese',179,2.6,17.5,11,0,150],
+ ['tabbouleh','تبّولة','🥗','lebanese',53,6.1,1.9,2.3,3.2,180],
+ ['warakEnab','ورق عنب','🍃','lebanese',102,17.7,4.4,1.5,6.7,200],
+ ['bamieh','يخنة بامية','🍲','lebanese',122,17,3.9,4.3,3,300],
+ ['fasoliaStew','يخنة فاصوليا','🍲','lebanese',140,22.6,8.1,1.9,7.4,300],
+ ['molokhia','ملوخية بالدجاج والرز','🥬','lebanese',112,11.9,5.4,4.8,2,300]
+];
+lab.forEach(a=>food(...a,'lab',LU,'قيم مرجعية مقاسة مخبرياً في تقرير الجامعة اللبنانية وWHO لعام 2021. قد تختلف وصفتك المنزلية.'));
+F.molokhia.note='وصفة التقرير تشمل الملوخية والدجاج والأرز والكزبرة والثوم والبصل ومكونات أخرى؛ لا تضيفي دجاجاً أو أرزاً منفصلين إلى الحصة نفسها.';
+// National food-composition report, Table 20–21: Lebanese Arabic sweets per 100 g.
+const sweets=[
+ ['baklava','بقلاوة مشكلة','🥮',474,64,6.6,27.3,11.8,35],
+ ['maamoulDate','معمول بالتمر','🌙',410,68.4,6.6,15.6,7,30],
+ ['maamoulWalnut','معمول بالجوز','🌙',433,66.2,10,18.3,7.5,30],
+ ['maamoulPistachio','معمول بالفستق','🌙',444,53.3,10.4,26.9,6.2,30],
+ ['ricePudding','رز بالحليب','🍮',204,32.7,6.7,6.5,0,180],
+ ['sfouf','صفوف','🍰',401,55.2,6.3,22,2.5,60],
+ ['namoura','نمّورة','🍰',376,75.4,3,8.8,8.4,70],
+ ['halawa','حلاوة طحينية','🍯',538,45.7,16.8,41,3.9,35],
+ ['knfCheese','كنافة بالجبنة','🍮',279,40.4,6.1,13.2,3.1,120],
+ ['muhallabiya','مهلبية','🍮',203,31.6,6.2,7.3,1.2,160],
+ ['katayef','قطايف بالقشطة','🥞',260,40.5,6,10.5,1.9,100],
+ ['znoud','زنود الست','🍮',307,41,4.5,17.8,2,90]
+];
+sweets.forEach(a=>food(a[0],a[1],a[2],'sweet',a[3],a[4],a[5],a[6],a[7],a[8],'lab',LU,'قيم الطاقة والماكروز من جدول 20، والألياف من جدول 21 في تقرير الجامعة اللبنانية وWHO لعام 2021.'));
+// Additional named Lebanese sweets with reported values in Tables 20–21.
+const moreSweets=[
+ ['baklavaLight','بقلاوة لايت','🥮',478,61.9,7.1,28.7,11.9,30],
+ ['barazik','برازق','🍪',553,49,15.3,42.1,4.1,30],
+ ['boundoukia','بندقية','🍬',465,64.1,11.5,23.2,7.4,25],
+ ['daoukia','داعوقية','🍬',347,52.8,7.3,15.1,8.8,30],
+ ['foustoukia','فستقية','🥜',446,59.7,19.2,18.5,8.6,30],
+ ['ghourayba','غريبة','🍪',510,62.9,6.8,32.9,2.1,30],
+ ['halawaLight','حلاوة لايت','🍯',531,57.5,12.6,35.6,3.4,30],
+ ['halawatJiben','حلاوة الجبن','🍮',248,36.7,9.7,8.8,6.8,100],
+ ['ishBulbul','عش البلبل','🥮',478,65.8,7.5,26.2,10,35],
+ ['kallaj','كلاج بالقشطة','🍮',215,33,3.6,9.7,4.6,100],
+ ['karabij','كرايبج بالجوز والكريما','🍪',391,61.1,7.6,16.5,4,60],
+ ['knfKashta','كنافة بالقشطة بالكاك','🍮',262,42.2,8.1,8.7,3.1,100],
+ ['makrounMushabak','معكرون ومشبك','🍩',448,77.1,3.5,17.9,1.5,40],
+ ['maamoulMadKashta','معمول مد بالقشطة','🌙',283,49.6,5.3,8.9,8.8,60],
+ ['maamoulMadWalnut','معمول مد بالجوز','🌙',443,58.8,8,25,3.9,60],
+ ['madlouka','مدلوقة','🍮',328,51.1,8,13,5.2,120],
+ ['mafroukaKashta','مفروكة بالقشطة','🍮',425,71.1,4.3,17.5,2.8,100],
+ ['moufattaka','مفتقة','🍯',332,59.2,5.9,10.1,3,100],
+ ['moushabak','مشبك','🍩',410,71.5,2.1,16.4,.8,50],
+ ['osmalieh','عثملية','🍮',271,27,9.3,17.9,2.5,100],
+ ['saniora','سينورة','🍪',490,68.7,7.4,26.4,1.8,30],
+ ['shaaybiyat','شعيبيات','🥮',298,39.1,9.5,14.7,1,80],
+ ['wardSham','ورد الشام','🌹',254,34.4,8.2,11.9,2.3,80]
+];
+moreSweets.forEach(a=>food(a[0],a[1],a[2],'sweet',a[3],a[4],a[5],a[6],a[7],a[8],'lab',LU,'قيم مرجعية من تحليل الحلويات في جدولَي 20 و21 من تقرير الجامعة اللبنانية وWHO لعام 2021.'));
+
+// Additional recipe/database estimates per 100 g cooked or ready-to-eat portion.
+food('fasoliaMeat','فاصوليا باللحمة','🍲','lebanese',120.4,5.32,14.12,5.28,1.68,250,'estimate','https://www.spacemelon.com/recipes/world/libano/fasolia-bi-lahme/','تقدير وصفة منشورة: الحصة نحو 301 kcal؛ حُوّلت إلى لكل 100 غ بافتراض أن الحصة تزن 250 غ، لذلك يبقى الوزن المفترض مصدراً للخطأ.');
+food('kibbehFried','كبّة مقلية','🧆','lebanese',260,20,13,14,2.5,150,'estimate','https://menutrition.app/dishes/kibbeh/','تقدير نموذجي لكل 100 غ، وليس قياساً مخبرياً لوصفة بيت محددة.');
+food('ashta','قشطة / عريشة طازجة','🥣','breakfast',150,7.3,7.5,10.2,0,100,'estimate','https://whatyoueat.io/foods/170851-whole-milk-ricotta-cheese','العريشة المحلية ليست موحّدة؛ استُخدمت بيانات ricotta كاملة الدسم كبديل تقريبي فقط. تحققي من المنتج المحلي إن توفرت بطاقة غذائية.');
+// Breakfast recipes: estimates calculated from typical ingredient portions; cooking oil and cheese are the largest sources of variation.
+food('batataBayd','بيض وبطاطا (بطاطا وبيض)','🍳','breakfast',113,9.7,5.6,5.5,1.1,275,'estimate','https://www.australianeggs.org.au/recipes-and-cooking/lebanese-potato-and-egg','تقدير لوصفة منزلية: بيضتان + 150 غ بطاطا + 5 غ زيت + بصل وبقدونس؛ القيمة تعتمد على الزيت وحجم الحصة.');
+food('sweetPotEgg','بيض وبطاطا حلوة','🍠','breakfast',119,11.5,5.5,5.2,1.8,275,'estimate','','تقدير لوصفة منزلية: بيضتان + 150 غ بطاطا حلوة + قليل زيت وخضرة.');
+food('omelette','أومليت بيض وخضرة','🍳','breakfast',126,2.8,8.2,9.1,.7,190,'estimate','','تقدير لوصفة: بيضتان مع خضرة وملعقة صغيرة زيت تقريباً.');
+food('eggAvocadoWrap','تورتيلا بيض وأفوكادو','🌯','breakfast',181,19.5,8.6,8.2,3.1,210,'estimate','','تقدير لوصفة: تورتيلا متوسطة + بيضتان + 40 غ أفوكادو + قليل زيت.');
+food('eggTomato','بيض بالبندورة (شكشوكة)','🍅','breakfast',105,4.5,6.4,6.6,1.2,250,'estimate','','تقدير لوصفة بيض وبندورة وبصل مع قليل زيت.');
+food('arichehHoney','عريشة مع عسل','🍯','breakfast',171,19,7,6.8,0,180,'estimate','','محسوب من عريشة ممثلة ببيانات ricotta مع كمية عسل؛ تختلف العريشة المحلية في الرطوبة والدسم.');
+food('labnehOlive','لبنة وزيت زيتون','🫒','breakfast',190,4,7,16,0,100,'estimate','','تقدير يعتمد على نوع اللبنة وكمية الزيت.');
+// Basic foods for building meals, per 100 g unless liquid is listed as ml.
+food('eggBoiled','بيض مسلوق','🥚','basic',155,1.1,12.6,10.6,0,100,'estimate','','متوسط غذائي للبيض الكامل؛ البيضة الكبيرة نحو 50 غ.');
+food('riceCooked','رز أبيض مطبوخ','🍚','basic',130,28.2,2.7,.3,.4,180,'estimate','','متوسط للأرز الأبيض المطبوخ دون زيت.');
+food('potatoCooked','بطاطا مسلوقة','🥔','basic',87,20.1,1.9,.1,1.8,180,'estimate','','متوسط دون زبدة أو زيت.');
+food('sweetPotato','بطاطا حلوة مشوية','🍠','basic',90,20.7,2,.2,3.3,150,'estimate','','متوسط للبطاطا الحلوة المطبوخة.');
+food('pita','خبز عربي أبيض','🫓','basic',275,55.7,9.1,1.2,2.2,60,'estimate','','متوسط؛ وزن الرغيف يختلف حسب المخبز والحجم.');
+food('tortilla','تورتيلا قمح متوسطة','🌯','world',310,52,8.5,8,3.5,60,'estimate','','متوسط لخبز تورتيلا قمح تجاري؛ راجعي الملصق للماركة المستخدمة.');
+food('avocado','أفوكادو','🥑','basic',160,8.5,2,14.7,6.7,50,'estimate','','متوسط للأفوكادو الطازج.');
+food('oats','شوفان جاف','🥣','basic',389,66.3,16.9,6.9,10.6,50,'estimate','','متوسط للشوفان الجاف.');
+food('banana','موز','🍌','basic',89,22.8,1.1,.3,2.6,120,'estimate','','موزة متوسطة صالحة للأكل نحو 118–120 غ.');
+food('greekYogurt','لبن يوناني سادة','🥣','basic',73,4,10,2,0,170,'estimate','','متوسط لزبادي يوناني قليل الدسم؛ تختلف الماركات.');
+food('laban','لبن / روب سادة','🥛','basic',61,4.7,3.5,3.3,0,180,'estimate','','متوسط لمنتج كامل الدسم؛ راجعي الملصق.');
+food('chickenBreast','صدر دجاج مطبوخ','🍗','basic',165,0,31,3.6,0,150,'estimate','','متوسط لوزن الدجاج بعد الطبخ دون جلد.');
+food('beefCooked','لحم بقري مطبوخ قليل الدهن','🥩','basic',217,0,26,12,0,120,'estimate','','يتغير حسب القطعة ونسبة الدهن.');
+food('salmon','سلمون مطبوخ','🐟','basic',206,0,22,12,0,150,'estimate','','متوسط للسلمون المطبوخ.');
+food('tuna','تونا بالماء مصفّاة','🐟','basic',116,0,25.5,.8,0,120,'estimate','','تختلف حسب النوع والتعبئة.');
+food('oliveOil','زيت زيتون','🫒','basic',884,0,0,100,0,5,'estimate','','الملعقة الصغيرة نحو 4.5 غ؛ يجب حساب زيت الطبخ.');
+food('butter','زبدة','🧈','basic',717,.1,.9,81,0,5,'estimate','','متوسط للزبدة كاملة الدسم.');
+food('almonds','لوز','🥜','nuts',579,21.6,21.2,49.9,12.5,20,'estimate','','متوسط اللوز النيء.');
+food('walnuts','جوز','🌰','nuts',654,13.7,15.2,65.2,6.7,20,'estimate','','متوسط الجوز.');
+food('pistachios','فستق حلبي','🥜','nuts',562,27.2,20.2,45.3,10.6,20,'estimate','','متوسط الفستق دون القشر.');
+food('cashews','كاجو','🥜','nuts',553,30.2,18.2,43.9,3.3,20,'estimate','','متوسط الكاجو.');
+food('peanuts','فستق سوداني','🥜','nuts',567,16.1,25.8,49.2,8.5,20,'estimate','','متوسط الفول السوداني.');
+food('darkChoc','شوكولا داكنة','🍫','sweet',598,45.9,7.8,42.6,10.9,20,'estimate','','متوسط شوكولا داكنة؛ تختلف حسب نسبة الكاكاو والسكر.');
+food('honey','عسل','🍯','sweet',304,82.4,.3,0,0,15,'estimate','','ملعقة الطعام نحو 21 غ.');
+food('dates','تمر','🌴','sweet',282,75,2.5,.4,8,25,'estimate','','النوع والحجم يغيران القيمة كثيراً.');
+food('berries','توت / فريز','🍓','basic',50,12,1,0.3,3,100,'estimate','','متوسط للفريز الطازج.');
+food('apple','تفاح','🍎','basic',52,13.8,.3,.2,2.4,150,'estimate','','تفاحة متوسطة نحو 180 غ.');
+food('whey','بروتين واي بودرة','🥤','basic',400,10,80,5,0,30,'estimate','','القيمة تقريبية؛ استخدمي ملصق عبوة البروتين لديك.');
+food('pastaCooked','معكرونة مطبوخة','🍝','world',158,30.9,5.8,.9,1.8,180,'estimate','','متوسط للمعكرونة المطبوخة دون صلصة.');
+food('tomatoSauce','صلصة بندورة','🍅','basic',29,6,1.3,.3,1.5,100,'estimate','','صلصة بندورة دون زيت مضاف.');
+food('vegetables','خضرة مطبوخة متنوعة','🥦','basic',45,8,2.3,.5,3,150,'estimate','','متوسط تقريبي؛ يعتمد على نوع الخضرة.');
+food('lentilSoup','شوربة عدس','🥣','world',90,14,5,.8,4,300,'estimate','','متوسط تقديري لشوربة عدس منزلية؛ كمية الزيت والماء تؤثر.');
+food('chickenStir','دجاج وخضار مقلي سريعاً','🥘','world',145,7,20,4,1.5,300,'estimate','','تقدير طبق دجاج وخضار مع قليل زيت وصلصة.');
+food('bolognese','سباغيتي بولونيز','🍝','world',165,22,8,5,2,350,'estimate','','تقدير طبق معكرونة وصلصة لحم؛ نسبة المعكرونة واللحم والزيت متغيرة.');
+food('chickenWrap','لفّة دجاج وخضار','🌯','world',190,22,13,6,2,250,'estimate','','تقدير لفّة تورتيلا بالدجاج والخضرة وصلصة خفيفة.');
+food('proteinPancake','بانكيك شوفان وموز','🥞','world',190,25,10,6,3,220,'estimate','','تقدير خليط شوفان وموز وبيض؛ دون شراب إضافي.');
+
+// Complete meal templates. Each component is a pre-defined food/recipe; no ingredient entry is required.
+const PRESETS=[
+ {id:'b-eggs',slot:0,name:'بيض وبطاطا مع خبز',emoji:'🍳',items:[['batataBayd',275],['pita',50]]},
+ {id:'b-sweet',slot:0,name:'بيض وبطاطا حلوة',emoji:'🍠',items:[['sweetPotEgg',275],['pita',40]]},
+ {id:'b-omelette',slot:0,name:'أومليت وخبز وأفوكادو',emoji:'🍳',items:[['omelette',190],['pita',60],['avocado',40]]},
+ {id:'b-wrap',slot:0,name:'تورتيلا بيض وأفوكادو',emoji:'🌯',items:[['eggAvocadoWrap',210]]},
+ {id:'b-aricheh',slot:0,name:'عريشة وعسل وخبز',emoji:'🍯',items:[['ashta',100],['honey',12],['pita',70],['banana',100]]},
+ {id:'b-shak',slot:0,name:'بيض بالبندورة وخبز',emoji:'🍅',items:[['eggTomato',250],['pita',70]]},
+ {id:'b-labneh',slot:0,name:'لبنة وزيت زيتون وخبز',emoji:'🫒',items:[['labnehOlive',100],['pita',90],['eggBoiled',100]]},
+ {id:'b-oats',slot:0,name:'شوفان بالحليب والموز',emoji:'🥣',items:[['oats',60],['laban',180],['banana',100],['honey',10]]},
+ {id:'b-foul',slot:0,name:'فول مدمّس وخبز',emoji:'🫘',items:[['foul',180],['pita',80],['eggBoiled',50]]},
+ {id:'m-molo',slot:1,name:'ملوخية بالدجاج والرز · طبق كامل',emoji:'🥬',items:[['molokhia',350]]},
+ {id:'m-fasolia',slot:1,name:'فاصوليا باللحمة مع رز',emoji:'🍲',items:[['fasoliaMeat',300],['riceCooked',180]]},
+ {id:'m-kibbeh',slot:1,name:'كبّة بالصينية مع لبن وفتوش',emoji:'🍲',items:[['kibbehTray',220],['laban',120],['fattoush',100]]},
+ {id:'m-kousa',slot:1,name:'كوسا محشي مع لبن',emoji:'🥒',items:[['kousa',300],['laban',150]]},
+ {id:'m-mujad',slot:1,name:'مجدّرة ولبن وسلطة',emoji:'🍲',items:[['mujadara',300],['laban',150],['fattoush',100]]},
+ {id:'m-shish',slot:1,name:'شيش برك مع رز أو سلطة',emoji:'🥟',items:[['shishbarak',350],['fattoush',100]]},
+ {id:'m-bamia',slot:1,name:'يخنة بامية مع رز',emoji:'🍲',items:[['bamieh',300],['riceCooked',180]]},
+ {id:'m-moghrabieh',slot:1,name:'مغربية مع دجاج',emoji:'🍲',items:[['moghrabieh',350],['chickenBreast',100]]},
+ {id:'m-ricechicken',slot:1,name:'رز بالدجاج وسلطة',emoji:'🍗',items:[['riceChicken',350],['fattoush',100]]},
+ {id:'m-kafta',slot:1,name:'كفتة وبطاطا مع سلطة',emoji:'🍢',items:[['kaftaPotato',350],['fattoush',100]]},
+ {id:'m-shawarma',slot:1,name:'شاورما دجاج مع رز',emoji:'🍗',items:[['shawarmaChicken',150],['riceCooked',200],['vegetables',100]]},
+ {id:'m-sayad',slot:1,name:'صيادية سمك',emoji:'🐟',items:[['sayadieh',350],['fattoush',100]]},
+ {id:'m-bolo',slot:1,name:'سباغيتي بولونيز',emoji:'🍝',items:[['bolognese',400],['vegetables',100]]},
+ {id:'m-salmon',slot:1,name:'سلمون وبطاطا وخضار',emoji:'🐟',items:[['salmon',160],['potatoCooked',250],['vegetables',150]]},
+ {id:'m-lentil',slot:1,name:'شوربة عدس وخبز ودجاج',emoji:'🥣',items:[['lentilSoup',300],['pita',60],['chickenBreast',100]]},
+ {id:'s-yogurt',slot:2,name:'لبن يوناني وموز وعسل',emoji:'🥣',items:[['greekYogurt',170],['banana',100],['honey',10]]},
+ {id:'s-fruitnuts',slot:2,name:'فاكهة ومكسرات',emoji:'🥜',items:[['apple',150],['almonds',15],['walnuts',10]]},
+ {id:'s-whey',slot:2,name:'شيك واي وموز',emoji:'🥤',items:[['laban',200],['whey',25],['banana',100]]},
+ {id:'s-hummus',slot:2,name:'حمّص وخبز وخضار',emoji:'🫘',items:[['hummus',80],['pita',40],['vegetables',100]]},
+ {id:'s-rice',slot:2,name:'رز بالحليب',emoji:'🍮',items:[['ricePudding',150]]},
+ {id:'n-rice',slot:3,name:'حلو الليل: رز بحليب وفستق',emoji:'🍮',items:[['ricePudding',180],['pistachios',10]]},
+ {id:'n-maamoul',slot:3,name:'معمول وجوز',emoji:'🌙',items:[['maamoulDate',30],['walnuts',15],['laban',150]]},
+ {id:'n-choc',slot:3,name:'شوكولا داكنة ومكسرات',emoji:'🍫',items:[['darkChoc',20],['almonds',20],['berries',100]]},
+ {id:'n-baklava',slot:3,name:'بقلاوة ولبن سادة',emoji:'🥮',items:[['baklava',25],['greekYogurt',120]]},
+ {id:'n-halwa',slot:3,name:'حلاوة طحينية مع فاكهة',emoji:'🍯',items:[['halawa',25],['apple',120]]},
+ {id:'n-knafe',slot:3,name:'كنافة بالجبنة',emoji:'🍮',items:[['knfCheese',100]]}
+];
+const SLOTNAMES=['الفطور · الوجبة الكبيرة الأولى','الغداء / بعد الظهر · الوجبة الرئيسية','سناك · العصر أو حول التمرين','سناك الليل · حلو أو مكسرات'];
+const SLOTICON=['🍳','🍲','🍌','🍫'];
+const SLOTWEIGHT=[.29,.43,.12,.16];
+// Ingredient checklist designed around ordinary Lebanese household staples and nearby-market items.
+const PANTRY_GROUPS=[
+ {name:'بروتينات وألبان',items:[['eggs','بيض'],['chicken','دجاج'],['mincedMeat','لحمة مفرومة'],['beef','لحمة قطع'],['fish','سمك'],['cannedTuna','تونا معلبة'],['yogurt','لبن / روب'],['labneh','لبنة'],['aricheh','عريشة / قشطة'],['cheese','جبنة']]},
+ {name:'حبوب وبقوليات وخبز',items:[['rice','رز'],['pasta','معكرونة'],['pita','خبز عربي'],['tortilla','تورتيلا'],['lentils','عدس'],['chickpeas','حمص حب'],['foul','فول'],['bulgur','برغل'],['moghrabiehGrain','مغربية'],['oats','شوفان']]},
+ {name:'خضرة ومكونات الطبخ',items:[['potato','بطاطا'],['sweetPotato','بطاطا حلوة'],['avocado','أفوكادو'],['tomato','بندورة'],['tomatoPaste','رب بندورة'],['onion','بصل'],['garlic','ثوم'],['zucchini','كوسا'],['greenBeans','فاصوليا خضرا'],['okra','بامية'],['molokhia','ملوخية'],['cucumber','خيار'],['lettuce','خس / خضرة سلطة'],['parsley','بقدونس'],['coriander','كزبرة'],['frozenVegetables','خضرة مفرزة']]},
+ {name:'أساسيات ونكهات',items:[['oliveOil','زيت زيتون'],['spices','بهارات وملح'],['lemon','ليمون'],['tahini','طحينة'],['milk','حليب'],['sugar','سكر'],['honey','عسل'],['butter','زبدة']]},
+ {name:'سناك وحلويات وموجودات جاهزة',items:[['banana','موز'],['apple','تفاح'],['nuts','مكسرات'],['darkChoc','شوكولا'],['maamoul','معمول'],['baklava','بقلاوة'],['halawa','حلاوة'],['ricePudding','رز بحليب جاهز'],['knafe','كنافة جاهزة'],['kibbehReady','كبّة جاهزة / مفرزة'],['shishbarakReady','شيش برك جاهز / مفرز'],['hummusReady','حمص جاهز']]}
+];
+const DEFAULT_PANTRY=['eggs','rice','potato','tomato','onion','garlic','pita','oliveOil','spices','yogurt','lentils','pasta','chickpeas','milk','banana','apple','nuts','honey'];
+const PANTRY_LABEL=Object.fromEntries(PANTRY_GROUPS.flatMap(g=>g.items).map(([id,label])=>[id,label]));
+// Ingredient requirements are practical cooking checks, not a claim that every household recipe is identical.
+const NEARBY_MARKET_ITEMS=new Set(['eggs','chicken','mincedMeat','beef','fish','rice','pasta','pita','lentils','chickpeas','foul','bulgur','potato','sweetPotato','tomato','tomatoPaste','onion','garlic','zucchini','greenBeans','okra','cucumber','lettuce','parsley','coriander','frozenVegetables','oliveOil','spices','lemon','tahini','milk','yogurt','labneh','banana','apple','nuts','honey','sugar','darkChoc','maamoul','baklava','halawa','ricePudding','knafe']);
+const RECIPE_IDEAS=[
+ {id:'b-eggs',slot:0,need:['eggs','potato','pita']}, {id:'b-sweet',slot:0,need:['eggs','sweetPotato','pita']},
+ {id:'b-omelette',slot:0,need:['eggs','tomato','pita']}, {id:'b-wrap',slot:0,need:['eggs','tortilla','avocado']},
+ {id:'b-aricheh',slot:0,need:['aricheh','honey','pita']}, {id:'b-shak',slot:0,need:['eggs','tomato','onion','pita']},
+ {id:'b-labneh',slot:0,need:['labneh','pita','oliveOil']}, {id:'b-oats',slot:0,need:['oats','milk','banana']},
+ {id:'b-foul',slot:0,need:['foul','pita','oliveOil']},
+ {id:'m-molo',slot:1,need:['molokhia','chicken','rice','garlic','coriander']},
+ {id:'m-fasolia',slot:1,need:['greenBeans','mincedMeat','tomato','onion','rice']},
+ {id:'m-kibbeh',slot:1,need:['bulgur','mincedMeat','onion','yogurt']},
+ {id:'m-kousa',slot:1,need:['zucchini','rice','mincedMeat','tomato','yogurt']},
+ {id:'m-mujad',slot:1,need:['lentils','rice','onion','yogurt']},
+ {id:'m-shish',slot:1,need:['shishbarakReady','yogurt','garlic']},
+ {id:'m-bamia',slot:1,need:['okra','beef','tomato','rice','onion']},
+ {id:'m-moghrabieh',slot:1,need:['moghrabiehGrain','chicken','chickpeas','onion']},
+ {id:'m-ricechicken',slot:1,need:['chicken','rice','onion','spices']},
+ {id:'m-kafta',slot:1,need:['mincedMeat','potato','tomato','onion']},
+ {id:'m-shawarma',slot:1,need:['chicken','rice','garlic','yogurt']},
+ {id:'m-sayad',slot:1,need:['fish','rice','onion','spices']},
+ {id:'m-bolo',slot:1,need:['mincedMeat','pasta','tomato','onion']},
+ {id:'m-salmon',slot:1,need:['fish','potato','frozenVegetables']},
+ {id:'m-lentil',slot:1,need:['lentils','chicken','pita','onion','tomato']},
+ {id:'s-yogurt',slot:2,need:['yogurt','banana','honey']}, {id:'s-fruitnuts',slot:2,need:['apple','nuts']},
+ {id:'s-whey',slot:2,need:['milk','banana']}, {id:'s-hummus',slot:2,need:['chickpeas','tahini','pita','cucumber']},
+ {id:'s-rice',slot:2,need:['milk','rice','sugar']},
+ {id:'n-rice',slot:3,need:['milk','rice','sugar','nuts']}, {id:'n-maamoul',slot:3,need:['maamoul','nuts']},
+ {id:'n-choc',slot:3,need:['darkChoc','nuts']}, {id:'n-baklava',slot:3,need:['baklava','yogurt']},
+ {id:'n-halwa',slot:3,need:['halawa','apple']}, {id:'n-knafe',slot:3,need:['knafe']}
+];
+let state={profile:{age:42,height:180,weight:92,goal:'maintain'},entries:{},pantry:DEFAULT_PANTRY.slice(),allowMarket:false};
+let currentDate=localToday(),pickerSlot=0,pickerCat='all',pickerOnlyPresets=false,currentPage='todayPage';
+function load(){try{let x=JSON.parse(localStorage.getItem(STORE)||'null');if(x&&x.entries&&x.profile)state=x}catch(e){console.warn('Storage unavailable',e)}if(!Array.isArray(state.pantry))state.pantry=DEFAULT_PANTRY.slice();if(typeof state.allowMarket!=='boolean')state.allowMarket=false;}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state));return true}catch(e){toast('تعذّر الحفظ التلقائي. احفظي نسخة احتياطية من الزر بالأعلى.');return false}}
+function entry(key=currentDate){if(!state.entries[key])state.entries[key]={weight:state.profile.weight||92,activity:'rest',life:1.2,distance:8,minutes:60,meals:[[],[],[],[]],cookFor:[1,1,1,1]};let e=state.entries[key];if(!Array.isArray(e.meals)||e.meals.length!==4)e.meals=[[],[],[],[]];if(!Array.isArray(e.cookFor)||e.cookFor.length!==4)e.cookFor=[1,1,1,1];return e}
+function sourceTag(f){return f.source==='lab'?'<span class="tag lab">مرجع لبناني مقاس</span>':f.source==='estimate'?'<span class="tag estimate">تقديري</span>':'<span class="tag other">مرجع غذائي</span>'}
+function macros(id,g){let f=F[id];if(!f)return {k:0,c:0,p:0,f:0,fib:0};let q=g/100;return {k:f.k*q,c:f.c*q,p:f.p*q,f:f.f*q,fib:f.fib*q}}
+function sumItems(items){return items.reduce((a,it)=>{let m=macros(it.id,it.g);a.k+=m.k;a.c+=m.c;a.p+=m.p;a.f+=m.f;a.fib+=m.fib;return a},{k:0,c:0,p:0,f:0,fib:0})}
+function sumDay(e){return e.meals.reduce((a,items)=>{let s=sumItems(items);Object.keys(a).forEach(k=>a[k]+=s[k]);return a},{k:0,c:0,p:0,f:0,fib:0})}
+const EX={rest:{label:'راحة',kind:'rest',k:0,desc:'لا توجد إضافة لسعرات تمرين اليوم.'},run8:{label:'ركض 8 كم',kind:'run',km:8},run10:{label:'ركض 10 كم',kind:'run',km:10},run15:{label:'ركض 15 كم',kind:'run',km:15},run20:{label:'ركض 20 كم',kind:'run',km:20},half:{label:'نصف ماراثون',kind:'run',km:21.1},marathon:{label:'ماراثون كامل',kind:'run',km:42.195},customRun:{label:'ركض بمسافة مخصصة',kind:'customRun'},push:{label:'جيم Push',kind:'gym',met:4.5},pull:{label:'جيم Pull',kind:'gym',met:4.5},legs:{label:'جيم Legs',kind:'gym',met:5.2},fullGym:{label:'جيم جسم كامل',kind:'gym',met:4.8},cross:{label:'تمرين متنوع / دراجة',kind:'gym',met:5},walk:{label:'مشي سريع',kind:'gym',met:3.3}};
+function compute(e){let w=Number(e.weight)||92,age=Number(state.profile.age)||42,h=Number(state.profile.height)||180;
+ let ree=10*w+6.25*h-5*age+5, life=Number(e.life)||1.2,base=ree*life,x=EX[e.activity]||EX.rest,exercise=0,detail='';
+ if(x.kind==='run') {let km=x.km;exercise=.95*w*km;detail=`ركض ${one(km)} كم · تقدير طاقة التمرين ${fmt(exercise)} kcal`}
+ else if(x.kind==='customRun'){let km=Number(e.distance)||0;exercise=.95*w*km;detail=`ركض ${one(km)} كم · تقدير طاقة التمرين ${fmt(exercise)} kcal`}
+ else if(x.kind==='gym'){let mins=Number(e.minutes)||60;exercise=Math.max(0,(x.met-1)*3.5*w/200*mins);detail=`${x.label} · ${fmt(mins)} دقيقة · تقدير طاقة التمرين ${fmt(exercise)} kcal`}
+ else detail='يوم راحة · الاحتياج مبني على نشاطك اليومي خارج التمرين.';
+ let goal=state.profile.goal||'maintain',goalAdjust=goal==='loss'?-300:(goal==='performance'?150:0);
+ let kcal=Math.max(1400,Math.round(base+exercise+goalAdjust)),protein= Math.round(w*1.7),fat=Math.round(Math.max(w*.8,kcal*.25/9)),carbs=Math.max(0,Math.round((kcal-protein*4-fat*9)/4));
+ return {ree,base,exercise,kcal,protein,fat,carbs,detail,goalAdjust};}
+function renderHeader(e){$('dateInput').value=currentDate;$('dateLabel').textContent=dayLabel(currentDate);$('activity').value=e.activity;$('weight').value=e.weight;$('life').value=e.life;$('goal').value=state.profile.goal||'maintain';
+ let x=EX[e.activity]||EX.rest,show=x.kind==='gym'||x.kind==='customRun';$('exerciseDetails').hidden=!show;$('distanceField').classList.toggle('hide',x.kind!=='customRun');$('minutesField').classList.toggle('hide',x.kind!=='gym');$('distance').value=e.distance||8;$('minutes').value=e.minutes||60;
+ let t=compute(e);$('activityText').textContent=t.detail+` · طاقة الراحة ${fmt(t.ree)} kcal قبل النشاط.`;
+ $('targetMode').textContent=(state.profile.goal||'maintain')==='loss'?'هدف اليوم · خفض تدريجي مع عجز 300 kcal':(state.profile.goal||'maintain')==='performance'?'هدف اليوم · دعم الأداء (+150 kcal)':'هدف اليوم · المحافظة على الوزن';
+ $('targetKcal').textContent=fmt(t.kcal);$('targetCarbs').textContent=fmt(t.carbs);$('targetProtein').textContent=fmt(t.protein);$('targetFat').textContent=fmt(t.fat);
+ $('targetExplain').textContent=`REE ${fmt(t.ree)} + نشاط يومي ${fmt(t.base-t.ree)} + تمرين ${fmt(t.exercise)} ${t.goalAdjust>=0?'+':''}${fmt(t.goalAdjust)} kcal لهدف التغذية. البروتين ${one(t.protein/e.weight)} غ/كغ.`;
+}
+function renderProgress(e){let t=compute(e),s=sumDay(e),pct=(a,b)=>Math.min(100,Math.max(0,a/Math.max(1,b)*100));
+ $('actualKcal').textContent=fmt(s.k);$('actualCarbs').textContent=fmt(s.c);$('actualProtein').textContent=fmt(s.p);$('actualFat').textContent=fmt(s.f);
+ [['Kcal',s.k,t.kcal],['Carbs',s.c,t.carbs],['Protein',s.p,t.protein],['Fat',s.f,t.fat]].forEach(([n,v,g])=>{let bar=$('bar'+n);bar.style.width=pct(v,g)+'%';bar.parentElement.classList.toggle('over',v>g*1.12)});
+ let rest=t.kcal-s.k,rc=t.carbs-s.c,rp=t.protein-s.p,rf=t.fat-s.f;$('remainingText').textContent=`المتبقي تقريباً: ${fmt(rest)} kcal · كربوهيدرات ${fmt(rc)} غ · بروتين ${fmt(rp)} غ · دهون ${fmt(rf)} غ`;
+ let ratio=s.k/Math.max(t.kcal,1),status=ratio<.75?'قيد البناء':ratio<=1.08?'قريب من الهدف':'تجاوزت الهدف';$('statusTag').textContent=status;
+ $('calorieHint').textContent=s.k===0?'اليوم فارغ. اختاري وجبات جاهزة أو أصنافاً من قاعدة الطعام.':ratio<.85?'الطاقة المسجلة أقل من الهدف حتى الآن. أضيفي وجبة أو عدّلي الحصص.':ratio>1.12?'الطاقة المسجلة أعلى من الهدف التقديري. راجعي الزيت والحلويات وحجم الحصص.':'راجعي أيضاً البروتين والكربوهيدرات والدهون؛ الاقتراب من السعرات وحده لا يضمن توازنها.';
+}
+function presetCal(p){return sumItems(p.items.map(([id,g])=>({id,g}))).k}
+function renderMeals(e){let t=compute(e);$('mealSlots').innerHTML=SLOTNAMES.map((name,i)=>{let items=e.meals[i],s=sumItems(items),goal=t.kcal*SLOTWEIGHT[i];
+ return `<section class="meal"><div class="meal-head"><div><h3>${SLOTICON[i]} ${name}</h3><div class="when smalltext">ميزانية تقريبية ${fmt(goal)} kcal · عدد الحصص للتحضير</div></div><div class="field" style="width:66px"><input aria-label="عدد الحصص" class="prepfor" data-cook="${i}" type="number" min="1" max="20" step="1" value="${e.cookFor[i]||1}"></div></div><div class="meal-body"><div class="meal-budget">الحصة التي تأكلها: ${fmt(s.k)} kcal · كربوهيدرات ${fmt(s.c)}غ · بروتين ${fmt(s.p)}غ · دهون ${fmt(s.f)}غ</div>
+ ${items.length?items.map((it,j)=>{let f=F[it.id],m=macros(it.id,it.g);return `<div class="food-row"><div class="food-name"><span class="emoji">${f.emoji}</span><b>${esc(f.name)}</b>${sourceTag(f)}</div><div class="food-meta">${fmt(m.k)} kcal · كربوهيدرات ${one(m.c)}غ · بروتين ${one(m.p)}غ · دهون ${one(m.f)}غ · لكل ${fmt(it.g)} غ</div><div class="food-controls"><button data-minus="${i}:${j}" aria-label="تقليل">−</button><input type="number" inputmode="decimal" min="1" max="3000" step="5" value="${one(it.g)}" data-portion="${i}:${j}" aria-label="الكمية بالغرام"><span class="smalltext">غ</span><button data-plus="${i}:${j}" aria-label="زيادة">+</button><button class="remove" data-remove="${i}:${j}">حذف</button></div></div>`}).join(''):'<div class="empty">لم تُضف أي وجبة بعد.</div>'}
+ <div class="meal-total">مجموع الحصة: ${fmt(s.k)} kcal · كربوهيدرات ${one(s.c)}غ · بروتين ${one(s.p)}غ · دهون ${one(s.f)}غ · ألياف ${one(s.fib)}غ</div>
+ <div class="add-row"><button class="btn small" data-add="${i}">＋ إضافة أكلة</button><button class="btn secondary small" data-preset="${i}">اختيار وجبة كاملة</button></div></div></section>`}).join('');}
+function renderToday(){let e=entry();renderHeader(e);renderProgress(e);renderMeals(e)}
+function renderPrep(){let e=entry(),out='';e.meals.forEach((items,i)=>{let cnt=Math.max(1,Number(e.cookFor[i])||1);out+=`<div class="source-box"><b>${SLOTICON[i]} ${SLOTNAMES[i]}</b>`;
+ if(!items.length){out+='<p>لا توجد وجبة محددة.</p>'}else{items.forEach(it=>{let f=F[it.id];out+=`<div class="summary-line"><span>${f.emoji} ${esc(f.name)}</span><b>${fmt(it.g)} غ × ${cnt} = ${fmt(it.g*cnt)} غ</b></div>`})}
+ out+=`<p>عدد الحصص المحضّرة: <b>${cnt}</b>. القيم هي وزن الطعام بعد الطبخ، وقد تختلف أوزان المكونات قبل الطبخ.</p></div>`});$('prepSummary').innerHTML=out;
+ let totals={};e.meals.forEach((items,i)=>items.forEach(it=>{let f=F[it.id],cnt=Math.max(1,Number(e.cookFor[i])||1);totals[f.name]=(totals[f.name]||0)+it.g*cnt}));
+ $('kitchenSummary').innerHTML=Object.keys(totals).length?Object.entries(totals).map(([n,g])=>`<div class="summary-line"><span>${esc(n)}</span><b>${fmt(g)} غ إجمالي</b></div>`).join(''):'<div class="empty">اختاري وجبات اليوم ليظهر ملخّص التحضير.</div>';
+ let hist=Object.entries(state.entries).filter(([k,v])=>Number(v.weight)>0).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,14);$('weightHistory').innerHTML=hist.length?hist.map(([k,v])=>`<div class="summary-line"><span>${dayLabel(k)}</span><b>${one(v.weight)} كغ</b></div>`).join(''):'<div class="empty">أدخلي وزنك في صفحة اليوم ليبدأ السجل.</div>';
+}
+let libCat='all';
+function renderFilters(target,selected,handler){$(target).innerHTML=CATS.map(([id,n])=>`<button class="${id===selected?'on':''}" data-filter="${id}" data-target="${target}">${n}</button>`).join('')}
+function macrosText(f){return `${fmt(f.k)} kcal · كربوهيدرات ${one(f.c)}غ · بروتين ${one(f.p)}غ · دهون ${one(f.f)}غ لكل 100غ`}
+function renderLibrary(){let q=($('librarySearch').value||'').trim().toLowerCase();renderFilters('libraryFilters',libCat);let rows=Object.values(F).filter(f=>(libCat==='all'||f.cat===libCat)&&(f.name.toLowerCase().includes(q)||f.id.toLowerCase().includes(q)));
+ $('libraryList').innerHTML=rows.map(f=>`<div class="list-item"><span style="font-size:1.5rem">${f.emoji}</span><div class="details"><b>${esc(f.name)} ${sourceTag(f)}</b><small>${macrosText(f)}</small><small>${esc(f.note||'')}</small></div><button class="btn secondary small" data-libadd="${f.id}">إضافة لليوم</button></div>`).join('')||'<div class="empty">لا توجد نتائج مطابقة.</div>'}
+function openPicker(slot,onlyPresets=false){pickerSlot=slot;pickerOnlyPresets=onlyPresets;pickerCat='all';$('pickerSearch').value='';$('pickerTitle').textContent=onlyPresets?'اختاري وجبة كاملة':`إضافة إلى: ${SLOTNAMES[slot]}`;$('picker').hidden=false;document.body.style.overflow='hidden';renderPicker(onlyPresets)}
+function closePicker(){$('picker').hidden=true;document.body.style.overflow='';}
+function renderPicker(onlyPresets=pickerOnlyPresets){let q=($('pickerSearch').value||'').trim().toLowerCase();renderFilters('pickerFilters',pickerCat);let presetHtml=PRESETS.filter(p=>p.slot===pickerSlot&&(pickerCat==='all'||(pickerSlot===0&&pickerCat==='breakfast')||(pickerSlot===1&&pickerCat==='lebanese')||(pickerSlot>1&&(pickerCat==='snack'||pickerCat==='sweet'||pickerCat==='nuts')))&&(p.name.toLowerCase().includes(q))).map(p=>`<button class="pick-card" data-pickpreset="${p.id}"><span class="emoji">${p.emoji}</span><span class="copy"><b>${esc(p.name)}</b><small>وجبة كاملة · ${p.items.map(x=>F[x[0]].name).join(' + ')}</small><small class="macrotext">${fmt(presetCal(p))} kcal · أضيفيها ثم عدّلي الحصص</small></span></button>`).join('');
+ let foods=Object.values(F).filter(f=>(pickerCat==='all'||f.cat===pickerCat)&&(f.name.toLowerCase().includes(q)||f.id.toLowerCase().includes(q))).map(f=>`<button class="pick-card" data-pickfood="${f.id}"><span class="emoji">${f.emoji}</span><span class="copy"><b>${esc(f.name)} ${sourceTag(f)}</b><small>${macrosText(f)}</small><small>${esc(f.note||'')}</small></span></button>`).join('');
+ $('pickerList').innerHTML=(onlyPresets?'':`<div class="smalltext" style="padding:9px 2px">الأصناف الفردية</div>${foods}`)+`<div class="smalltext" style="padding:10px 2px">وجبات جاهزة</div>${presetHtml||'<div class="empty">لا توجد وجبات كاملة في هذا التصنيف. اختاري «الكل».</div>'}`+(foods&&!onlyPresets?'': '');
+ if(onlyPresets)$('pickerList').innerHTML=`<div class="smalltext" style="padding:10px 2px">وجبات جاهزة</div>${presetHtml||'<div class="empty">لا توجد وجبات مطابقة.</div>'}`;
+}
+function addFood(id,slot=pickerSlot){let f=F[id];if(!f)return;entry().meals[slot].push({id,g:f.serving||150});save();render();toast('تمت إضافة '+f.name)}
+function addPreset(id){let p=PRESETS.find(x=>x.id===id);if(!p)return;p.items.forEach(([fid,g])=>entry().meals[pickerSlot].push({id:fid,g}));save();closePicker();render();toast('أُضيفت الوجبة الكاملة')}
+function pantryDefault(){state.pantry=DEFAULT_PANTRY.slice();save();renderPantry()}
+function pantryClear(){state.pantry=[];save();renderPantry()}
+function renderPantry(){
+ const chosen=new Set(state.pantry||[]);
+ $('pantryGroups').innerHTML=PANTRY_GROUPS.map(g=>`<div class="pantry-group"><h3>${esc(g.name)}</h3><div class="pantry-grid">${g.items.map(([id,label])=>`<label class="pantry-item"><input type="checkbox" data-pantry="${id}" ${chosen.has(id)?'checked':''}><span>${esc(label)}</span></label>`).join('')}</div></div>`).join('');
+ $('allowMarket').checked=!!state.allowMarket;
+ let e=entry(),t=compute(e);$('pantryActivityTag').textContent=EX[e.activity]?.label||'تمرين اليوم';
+ $('pantryTargetText').textContent=`هدف اليوم ${fmt(t.kcal)} kcal · كربوهيدرات ${fmt(t.carbs)}غ · بروتين ${fmt(t.protein)}غ · دهون ${fmt(t.fat)}غ. الاقتراحات مرتبة بحسب توفر المكونات ومدى قرب الوجبة من ميزانية الفترة.`;
+ renderRecipeSuggestions();
+}
+function recipeMatches(slot){
+ const available=new Set(state.pantry||[]),allow=!!state.allowMarket,e=entry(),t=compute(e),target={k:t.kcal*SLOTWEIGHT[slot],c:t.carbs*SLOTWEIGHT[slot],p:t.protein*SLOTWEIGHT[slot],f:t.fat*SLOTWEIGHT[slot]};
+ return RECIPE_IDEAS.filter(r=>r.slot===slot).map(r=>{
+  const p=PRESETS.find(x=>x.id===r.id);if(!p)return null;
+  const missing=r.need.filter(id=>!available.has(id));if(missing.length>0&&(!allow||missing.length>1||missing.some(id=>!NEARBY_MARKET_ITEMS.has(id))))return null;
+  const m=sumItems(p.items.map(([id,g])=>({id,g})));
+  const score=.65*Math.abs(m.k-target.k)/Math.max(target.k,100)+.75*Math.abs(m.p-target.p)/Math.max(target.p,8)+.25*Math.abs(m.c-target.c)/Math.max(target.c,10);
+  return {recipe:r,preset:p,missing,macros:m,score};
+ }).filter(Boolean).sort((a,b)=>a.missing.length-b.missing.length||a.score-b.score).slice(0,4);
+}
+function renderRecipeSuggestions(){
+ const labels=['الفطور','الوجبة الرئيسية','سناك العصر / حول التمرين','سناك الليل والحلو'];
+ const out=labels.map((label,slot)=>{
+  const matches=recipeMatches(slot);
+  const cards=matches.map(x=>{
+   const missing=x.missing.length?`<small class="missing">ينقص: ${x.missing.map(id=>esc(PANTRY_LABEL[id]||id)).join('، ')} — متوفر عادة في الدكان القريب</small>`:'<small class="available">كل المكونات معلّمة على أنها موجودة في البيت</small>';
+   return `<div class="recipe-card"><div class="recipe-card-top"><span class="emoji">${x.preset.emoji}</span><div class="recipe-card-main"><b>${esc(x.preset.name)}</b><small>${x.preset.items.map(([id])=>F[id]?.name||id).join(' + ')}</small><small class="macroline">${fmt(x.macros.k)} kcal · كربوهيدرات ${one(x.macros.c)}غ · بروتين ${one(x.macros.p)}غ · دهون ${one(x.macros.f)}غ</small>${missing}<small>${x.score<.55?'ملاءمة غذائية جيدة مبدئياً': 'يمكن تعديل حجم الحصة للوصول إلى هدف اليوم'}</small></div></div><button class="btn secondary small" data-use-recipe="${x.preset.id}" data-use-slot="${slot}">استخدميها لهذه الوجبة</button></div>`;
+  }).join('');
+  return `<div class="recipe-group"><h3>${['🍳','🍲','🍌','🍫'][slot]} ${label}</h3>${cards||'<div class="recipe-empty">لا توجد وصفة تطابق المكونات المحددة. أضيفي صنفاً متوفراً أو فعّلي خيار مكوّن واحد من الدكان.</div>'}</div>`;
+ }).join('');
+ $('recipeSuggestions').innerHTML=out;
+}
+function useSuggestedRecipe(id,slot){
+ const p=PRESETS.find(x=>x.id===id);if(!p)return;
+ const e=entry();
+ if(e.meals[slot].length&&!confirm(`هذه الفترة تحتوي وجبة مسجلة. هل تريدين استبدالها بـ «${p.name}»؟`))return;
+ const t=compute(e),target=t.kcal*SLOTWEIGHT[slot],items=p.items.map(([fid,g])=>({id:fid,g})),base=sumItems(items).k;
+ const scale=base>0?Math.min(1.7,Math.max(.75,target/base)):1;
+ e.meals[slot]=items.map(it=>({...it,g:Math.max(5,Math.round(it.g*scale/5)*5)}));
+ save();renderToday();setPage('todayPage');toast('أُضيف الاقتراح. راجعي الحصة والماكروز قبل التحضير.');
+}
+function suggestDay(){setPage('pantryPage');renderPantry();}
+
+function updateEntryField(id,val){let e=entry();if(id==='weight'){let v=Number(val);if(v>=40&&v<=200){e.weight=v;state.profile.weight=v}}else if(id==='activity')e.activity=val;else if(id==='goal')state.profile.goal=val;else if(id==='life')e.life=Number(val);else if(id==='distance')e.distance=Math.max(0,Number(val)||0);else if(id==='minutes')e.minutes=Math.max(10,Number(val)||60);save();renderToday()}
+function toast(msg){let el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2300)}
+function render(){renderToday();if(currentPage==='prepPage')renderPrep();if(currentPage==='libraryPage')renderLibrary()}
+function setPage(id){currentPage=id;document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='prepPage')renderPrep();if(id==='pantryPage')renderPantry();if(id==='libraryPage')renderLibrary();window.scrollTo({top:0,behavior:'instant'})}
+function exportBackup(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='akl-al-yawm-backup-'+localToday()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('تم تجهيز نسخة الاحتياط')}
+function importBackup(file){let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.entries||!x.profile)throw new Error('invalid');state=x;if(!Array.isArray(state.pantry))state.pantry=DEFAULT_PANTRY.slice();if(typeof state.allowMarket!=='boolean')state.allowMarket=false;save();render();toast('تم استرجاع البيانات')}catch(e){toast('ملف النسخة الاحتياطية غير صالح')}};r.readAsText(file)}
+function copyPrevious(){let prev=dateAdd(currentDate,-1),old=state.entries[prev];if(!old){toast('لا يوجد تخطيط محفوظ لليوم السابق');return}let e=entry();e.meals=JSON.parse(JSON.stringify(old.meals||[[],[],[],[]]));e.cookFor=(old.cookFor||[1,1,1,1]).slice();save();render();toast('نُسخت وجبات أمس')}
+function bind(){document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setPage(b.dataset.page)));
+ $('dateInput').addEventListener('change',e=>{currentDate=e.target.value||localToday();entry();render()});$('prevDay').onclick=()=>{currentDate=dateAdd(currentDate,-1);entry();render()};$('nextDay').onclick=()=>{currentDate=dateAdd(currentDate,1);entry();render()};$('goToday').onclick=()=>{currentDate=localToday();entry();render()};
+ ['activity','weight','life','distance','minutes','goal'].forEach(id=>$(id).addEventListener('change',e=>updateEntryField(id,e.target.value)));
+ $('suggestBtn').onclick=suggestDay;$('copyPrevBtn').onclick=copyPrevious;$('clearBtn').onclick=()=>{let e=entry();if(confirm('هل تريدين حذف وجبات هذا اليوم فقط؟')){e.meals=[[],[],[],[]];save();render()}};$('printBtn').onclick=()=>window.print();
+ $('mealSlots').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.add!==undefined)openPicker(Number(b.dataset.add));if(b.dataset.preset!==undefined)openPicker(Number(b.dataset.preset),true);
+ if(b.dataset.minus){let [i,j]=b.dataset.minus.split(':').map(Number);let it=entry().meals[i][j];it.g=Math.max(5,it.g-10);save();render()}
+ if(b.dataset.plus){let [i,j]=b.dataset.plus.split(':').map(Number);entry().meals[i][j].g+=10;save();render()}
+ if(b.dataset.remove){let [i,j]=b.dataset.remove.split(':').map(Number);entry().meals[i].splice(j,1);save();render()}});
+ $('mealSlots').addEventListener('change',e=>{if(e.target.dataset.portion){let [i,j]=e.target.dataset.portion.split(':').map(Number),v=Number(e.target.value);if(v>0&&v<=3000){entry().meals[i][j].g=v;save();render()}else render()}if(e.target.dataset.cook!==undefined){let i=Number(e.target.dataset.cook),v=Math.max(1,Math.min(20,Number(e.target.value)||1));entry().cookFor[i]=v;save();render();if(currentPage==='prepPage')renderPrep()}});
+ $('closePicker').onclick=closePicker;$('picker').addEventListener('click',e=>{if(e.target===$('picker'))closePicker()});$('pickerSearch').addEventListener('input',()=>renderPicker());$('pickerFilters').addEventListener('click',e=>{let b=e.target.closest('[data-filter]');if(!b)return;pickerCat=b.dataset.filter;renderPicker()});$('pickerList').addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;if(b.dataset.pickfood){addFood(b.dataset.pickfood);closePicker();render()}if(b.dataset.pickpreset)addPreset(b.dataset.pickpreset)});
+ $('librarySearch').addEventListener('input',renderLibrary);$('libraryFilters').addEventListener('click',e=>{let b=e.target.closest('[data-filter]');if(!b)return;libCat=b.dataset.filter;renderLibrary()});$('libraryList').addEventListener('click',e=>{let b=e.target.closest('[data-libadd]');if(!b)return;let id=b.dataset.libadd;let slot=F[id].cat==='breakfast'?0:(F[id].cat==='lebanese'?1:(F[id].cat==='sweet'||F[id].cat==='nuts'?3:2));addFood(id,slot);setPage('todayPage')});
+ $('pantryGroups').addEventListener('change',e=>{let id=e.target.dataset.pantry;if(!id)return;let set=new Set(state.pantry||[]);if(e.target.checked)set.add(id);else set.delete(id);state.pantry=[...set];save();renderRecipeSuggestions()});
+ $('allowMarket').addEventListener('change',e=>{state.allowMarket=e.target.checked;save();renderRecipeSuggestions()});
+ $('pantryDefaults').onclick=pantryDefault;$('pantryClear').onclick=pantryClear;
+ $('recipeSuggestions').addEventListener('click',e=>{let b=e.target.closest('[data-use-recipe]');if(!b)return;useSuggestedRecipe(b.dataset.useRecipe,Number(b.dataset.useSlot))});
+ $('exportBtn').onclick=exportBackup;$('importBtn').onclick=()=>$('importFile').click();$('importFile').addEventListener('change',e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=''});
+}
+load();entry();$('dateInput').value=currentDate;bind();render();
+// Register the optional service worker only when this folder is served over HTTPS or localhost.
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
