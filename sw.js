@@ -1,11 +1,10 @@
 /* Akl Al-Yawm PWA service worker.
-   Navigations are network-first so a newly published GitHub Pages version
-   replaces the cached HTML on the next online visit; offline fallback remains. */
-const CACHE = 'akl-al-yawm-v3';
+   Versioned cache invalidates the previous app shell. Online page navigation
+   revalidates against GitHub Pages so the installed Home Screen app sees updates. */
+const CACHE = 'akl-al-yawm-v4';
 const APP_SHELL = [
   './',
   './index.html',
-  './akl_esbou3_al_marathon.html',
   './manifest.webmanifest',
   './apple-touch-icon.png',
   './icon-192.png',
@@ -33,13 +32,13 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // HTML navigations always check GitHub Pages first, then refresh the offline cache.
+  // Always revalidate HTML online; use the cached app shell when offline.
   if (request.mode === 'navigate' || request.destination === 'document') {
     event.respondWith(
-      fetch(request).then(response => {
+      fetch(request, { cache: 'no-cache' }).then(async response => {
         if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy));
+          const cache = await caches.open(CACHE);
+          await cache.put('./index.html', response.clone());
         }
         return response;
       }).catch(async () => {
@@ -49,7 +48,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell assets are cache-first, then stored after a successful network fetch.
+  // Static app assets are cache-first and stored after a successful fetch.
   event.respondWith(
     caches.match(request).then(cached => {
       if (cached) return cached;
