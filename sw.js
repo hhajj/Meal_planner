@@ -1,7 +1,7 @@
 /* Akl Al-Yawm PWA service worker.
    Versioned cache invalidates the previous app shell. Online page navigation
    revalidates against GitHub Pages so the installed Home Screen app sees updates. */
-const CACHE = 'akl-al-yawm-v4';
+const CACHE = 'akl-al-yawm-v5';
 const APP_SHELL = [
   './',
   './index.html',
